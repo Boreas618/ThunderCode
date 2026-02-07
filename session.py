@@ -1,9 +1,15 @@
 from dataclasses import dataclass, field
 from enum import Enum
-from typing import Any
+from typing import Any, Callable
 from openai import AsyncOpenAI
 from tools import ToolKit
 import json
+
+# Callback type for tool execution events.
+# on_tool_start(name, arguments) — called before a tool executes.
+# on_tool_result(name, arguments, result) — called after a tool executes.
+ToolStartCallback = Callable[[str, dict[str, Any]], None]
+ToolResultCallback = Callable[[str, dict[str, Any], dict[str, Any]], None]
 
 
 class MessageRole(Enum):
@@ -29,8 +35,16 @@ class Message:
 
 
 class Session:
-    def __init__(self, tool_kit: ToolKit, system_prompt: str) -> None:
+    def __init__(
+        self,
+        tool_kit: ToolKit,
+        system_prompt: str,
+        on_tool_start: ToolStartCallback | None = None,
+        on_tool_result: ToolResultCallback | None = None,
+    ) -> None:
         self.tool_kit = tool_kit
+        self.on_tool_start = on_tool_start
+        self.on_tool_result = on_tool_result
         self.messages: list[Message] = [
             Message(role=MessageRole.SYSTEM, content=system_prompt)
         ]
@@ -119,12 +133,10 @@ class Session:
 
             # Execute all tool calls and add results to history
             for tool_call in message.tool_calls:
-                print(f"[Tool] {tool_call.function.name}")
                 args = json.loads(tool_call.function.arguments)
+                if self.on_tool_start:
+                    self.on_tool_start(tool_call.function.name, args)
                 result = self.tool_kit.execute(tool_call.function.name, **args)
                 self.append_tool(tool_call.id, result)
-
-                if result.get("success"):
-                    print(f"  ✓ {result.get('message', 'OK')}")
-                else:
-                    print(f"  ✗ {result.get('error', 'Failed')}")
+                if self.on_tool_result:
+                    self.on_tool_result(tool_call.function.name, args, result)
