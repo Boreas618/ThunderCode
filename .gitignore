@@ -1,2 +1,6 @@
 .env
 __pycache__
+ref/
+.DS_Store
+target/
+.claude

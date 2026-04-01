@@ -1,6 +1,6 @@
-# NanoCoder
+# ThunderCode
 
-A minimal, terminal-based AI coding agent. NanoCoder provides an interactive REPL where you can chat with an LLM that has access to file system operations, shell commands, and intelligent patching capabilities.
+A minimal, terminal-based AI coding agent. ThunderCode provides an interactive REPL where you can chat with an LLM that has access to file system operations, shell commands, and intelligent patching capabilities.
 
 ## Features
 
@@ -11,7 +11,7 @@ A minimal, terminal-based AI coding agent. NanoCoder provides an interactive REP
 
 ## Tools
 
-NanoCoder provides the following tools to the LLM:
+ThunderCode provides the following tools to the LLM:
 
 | Tool | Description |
 |------|-------------|
@@ -31,8 +31,8 @@ Requires Python 3.12+.
 
 ```bash
 # Clone the repository
-git clone https://github.com/yourusername/NanoCoder.git
-cd NanoCoder
+git clone https://github.com/yourusername/ThunderCode.git
+cd ThunderCode
 
 # Install dependencies with uv
 uv sync
@@ -62,10 +62,10 @@ You can also set the `MODEL` environment variable to specify which model to use 
 
 ```bash
 # Run with uv
-uv run python nano_coder.py
+uv run python thunder_code.py
 
 # Or directly
-python nano_coder.py
+python thunder_code.py
 ```
 
 Once running, type your prompts at the `>>>` prompt:
@@ -85,8 +85,8 @@ Press `Ctrl+C` or `Ctrl+D` to exit.
 ## Project Structure
 
 ```
-NanoCoder/
-├── nano_coder.py      # Main entry point
+ThunderCode/
+├── thunder_code.py      # Main entry point
 ├── session.py         # Conversation session management
 ├── system_prompt.md   # System prompt for the LLM
 ├── tools/

@@ -1,0 +1,75 @@
+[package]
+name = "thundercode"
+version = "0.1.0"
+edition = "2021"
+license = "MIT"
+rust-version = "1.75"
+
+[dependencies]
+# Serialization
+serde = { version = "1", features = ["derive"] }
+serde_json = "1"
+serde_yaml = "0.9"
+toml = "0.8"
+
+# Async runtime
+tokio = { version = "1", features = ["full"] }
+tokio-stream = "0.1"
+futures = "0.3"
+async-trait = "0.1"
+
+# HTTP & networking
+reqwest = { version = "0.12", features = ["json", "stream", "rustls-tls"], default-features = false }
+tokio-tungstenite = "0.24"
+url = "2"
+http = "1"
+bytes = "1"
+
+# Error handling
+thiserror = "2"
+anyhow = "1"
+
+# Logging / tracing
+tracing = "0.1"
+tracing-subscriber = { version = "0.3", features = ["env-filter"] }
+
+# CLI & terminal
+clap = { version = "4", features = ["derive"] }
+crossterm = "0.28"
+taffy = "0.6"
+unicode-width = "0.2"
+
+# Text & rendering
+pulldown-cmark = "0.12"
+syntect = "5"
+regex = "1"
+
+# Auth & crypto
+jsonwebtoken = "9"
+base64 = "0.22"
+sha2 = "0.10"
+
+# IDs & time
+uuid = { version = "1", features = ["v4", "serde"] }
+chrono = { version = "0.4", features = ["serde"] }
+nanoid = "0.4"
+rand = "0.8"
+
+# File system
+dirs = "6"
+notify = "7"
+globset = "0.4"
+glob = "0.3"
+tempfile = "3"
+image = "0.25"
+
+# Git
+git2 = "0.19"
+
+# System
+libc = "0.2"
+
+[profile.release]
+lto = true
+strip = true
+codegen-units = 1
